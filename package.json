@@ -13,7 +13,9 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "precommit": "npm run test",
-    "build": "npm run clean && tsc",
+    "prebuild": "npm run clean",
+    "build": "tsc",
+    "dev": "tsc --watch",
     "clean": "rm -rf ./dist",
     "pretest": "npm run lint",
     "test": "jest --passWithNoTests",

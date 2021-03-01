@@ -115,9 +115,13 @@ export class Yarn implements Packager {
     );
   }
 
-  async install(cwd) {
+  async install(cwd, isMonorepo = false) {
     const command = /^win/.test(process.platform) ? 'yarn.cmd' : 'yarn';
-    const args = ['install', '--frozen-lockfile', '--non-interactive'];
+
+    const args = !isMonorepo
+      ? ['install', '--frozen-lockfile', '--non-interactive']
+      : // if we're a monorepo, the lockfile will have extra deps so --frozen-lockfile will not work
+        ['install', '--non-interactive'];
 
     await spawnProcess(command, args, { cwd });
   }
